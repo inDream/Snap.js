@@ -64,6 +64,7 @@
          * @type {Object}
          */
         var cache = self.cache = {
+            hasIntent: null,
             isDragging: false,
             simpleStates: {
                 opening: null,
@@ -641,6 +642,8 @@
                             }
                         }
                         cache.isDragging = false;
+                        cache.hasIntent = false;
+                        cache.intentChecked  = false;
                         cache.startDragX = utils.page('X', e);
                     }
                 }
