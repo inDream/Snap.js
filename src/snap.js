@@ -189,7 +189,7 @@
              * @return {[type]} [description]
              */
             canTransform: function(){
-                return typeof settings.element.style[cache.vendor+'Transform'] !== 'undefined';
+                return typeof settings.snapElement.style[cache.vendor+'Transform'] !== 'undefined';
             },
 
             /**
@@ -295,9 +295,9 @@
                     matrix: function(index) {
 
                         if( !cache.canTransform ){
-                            return parseInt(settings.element.style.left, 10);
+                            return parseInt(settings.snapElement.style.left, 10);
                         } else {
-                            var matrix = win.getComputedStyle(settings.element)[cache.vendor+'Transform'].match(/\((.*)\)/),
+                            var matrix = win.getComputedStyle(settings.snapElement)[cache.vendor+'Transform'].match(/\((.*)\)/),
                                 ieOffset = 8;
                             if (matrix) {
                                 matrix = matrix[1].split(',');
@@ -317,7 +317,7 @@
                  * Called when the element has finished transitioning
                  */
                 easeCallback: function(fn){
-                    settings.element.style[cache.vendor+'Transition'] = '';
+                    settings.snapElement.style[cache.vendor+'Transition'] = '';
                     cache.translation = action.translate.get.matrix(4);
                     cache.easing = false;
 
@@ -349,7 +349,7 @@
                         cache.easing = true;
                         cache.easingTo = n;
 
-                        settings.element.style[cache.vendor+'Transition'] = 'all ' + settings.transitionSpeed + 's ' + settings.easing;
+                        settings.snapElement.style[cache.vendor+'Transition'] = 'all ' + settings.transitionSpeed + 's ' + settings.easing;
 
                         cache.once = cb;
 
@@ -357,7 +357,7 @@
                         action.translate.x(n);
                     }
                     if(n===0){
-                        settings.element.style[cache.vendor+'Transform'] = '';
+                        settings.snapElement.style[cache.vendor+'Transform'] = '';
                     }
                 },
 
@@ -385,12 +385,12 @@
 
                     if( cache.canTransform ){
                         var theTranslate = 'translate3d(' + n + 'px, 0,0)';
-                        settings.element.style[cache.vendor+'Transform'] = theTranslate;
+                        settings.snapElement.style[cache.vendor+'Transform'] = theTranslate;
                     } else {
-                        settings.element.style.width = (win.innerWidth || doc.documentElement.clientWidth)+'px';
+                        settings.snapElement.style.width = (win.innerWidth || doc.documentElement.clientWidth)+'px';
 
-                        settings.element.style.left = n+'px';
-                        settings.element.style.right = '';
+                        settings.snapElement.style.left = n+'px';
+                        settings.snapElement.style.right = '';
                     }
                 }
             },
@@ -449,7 +449,7 @@
                     }
 
                     utils.dispatchEvent('start');
-                    settings.element.style[cache.vendor+'Transition'] = '';
+                    settings.snapElement.style[cache.vendor+'Transition'] = '';
                     cache.isDragging = true;
 
                     cache.intentChecked = false;
@@ -650,6 +650,7 @@
 
         // Initialize
         if (opts.element) {
+            settings.snapElement = opts.target || opts.element;
             utils.extend(settings, opts);
             cache.vendor = utils.vendor();
             cache.canTransform = utils.canTransform();

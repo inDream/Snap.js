@@ -87,6 +87,7 @@ settings = {
 ```
 
 * `element`: The element which the user will be sliding side to side
+* `target`: The element which will be sliding side to side (default: settings.element)
 * `dragger`: The element which the user will be using to slide the target element side to side
 * `disable`: String, set to 'left' or 'right' to disable the respective side
 * `addBodyClasses`: Add classes to the body to signify which side is being opened
@@ -101,6 +102,9 @@ settings = {
 * `touchToDrag`: If true, dragging the target `settings.element` will open/close the pane
 * `minDragDistance`: The minimum amount of pixels the user needs to drag within the `slideIntent` degrees to move the pane
 * `slideIntent`: The number of degrees the user must initiate sliding in towards the left or right (see diagram below)
+
+Notes on `settings.target`: You can only set the slide target be left or right drawer.
+For left drawer, add a style rule `left: -266px;`(settings.maxPosition)
 
 Notes on Slide Intent: The slide intent is an int between 0 and 90, and represents the degrees in the first quadrant of a circle that you would like to have mirrored on the X *and* Y axis. For example, if you have 40 set as your `slideIntent` value, the user would only be able to slide the pane by dragging in the blue area in the diagram below. Once intent has been defined, it will not change until the user releases.
 
