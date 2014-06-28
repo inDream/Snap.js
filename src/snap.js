@@ -408,8 +408,6 @@
                     cache.translation = 0;
                     cache.easing = false;
                     utils.events.addEvent(self.settings.element, utils.eventType('down'), action.drag.startDrag);
-                    utils.events.addEvent(self.settings.element, utils.eventType('move'), action.drag.dragging);
-                    utils.events.addEvent(self.settings.element, utils.eventType('up'), action.drag.endDrag);
                 },
 
                 /**
@@ -474,6 +472,10 @@
                             percentage: 0
                         }
                     };
+
+                    // Optimize performance
+                    utils.events.addEvent(self.settings.element, utils.eventType('move'), action.drag.dragging);
+                    utils.events.addEvent(self.settings.element, utils.eventType('up'), action.drag.endDrag);
                 },
 
                 /**
@@ -643,6 +645,10 @@
                         cache.isDragging = false;
                         cache.startDragX = utils.page('X', e);
                     }
+
+                    // Optimize performance
+                    utils.events.removeEvent(settings.element, utils.eventType('move'), action.drag.dragging);
+                    utils.events.removeEvent(settings.element, utils.eventType('up'), action.drag.endDrag);
                 }
             }
         };
